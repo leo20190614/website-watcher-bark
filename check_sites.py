@@ -5,12 +5,16 @@ import os
 from datetime import datetime
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-BARK_KEY = "2qRcV2zJa2NXGAH7MFmtSd"  # ⬅️ 请替换为你 Bark App 中显示的 key
+BARK_KEY = "2qRcV2zJa2NXGAH7MFmtSd"  # ← 你的 Bark 推送 key
 
 def send_bark_notification(title, msg):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     url = f"https://api.day.app/{BARK_KEY}/{title}/{msg}\n{now}"
-    requests.get(url)
+    try:
+        requests.get(url)
+        print(f"✅ 已发送推送：{title}")
+    except Exception as e:
+        print(f"❌ 推送失败：{e}")
 
 def check_changi():
     url = "https://www.changiairport.com/en/corporate/our-media-hub/publications/reports.html"
@@ -60,7 +64,6 @@ def save_history(history):
 def main():
     history = load_history()
     updated = False
-    keywords = ["Annual", "Financial", "Sustainability", "Report", "Outlook", "Weekly"]
 
     for site, func in [
         ("changi", check_changi),
@@ -71,13 +74,17 @@ def main():
     ]:
         if site not in history:
             history[site] = []
+
         for title, link in func():
             if link not in history[site]:
-                if not any(k.lower() in title.lower() for k in keywords):
-                    continue
+                # 👉 已注释关键词过滤，全部推送
+                # keywords = ["Annual", "Financial", "Report"]
+                # if not any(k.lower() in title.lower() for k in keywords):
+                #     continue
                 send_bark_notification(f"{site.upper()} 有新内容", f"{title}\n{link}")
                 history[site].append(link)
                 updated = True
+
     if updated:
         save_history(history)
 
