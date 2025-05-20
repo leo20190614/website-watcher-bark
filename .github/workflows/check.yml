@@ -2,19 +2,23 @@ name: Check Website Updates
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 每30分钟运行
+    - cron: '0,30 * * * *'   # 每小时的整点和半点运行（UTC 时间）
   workflow_dispatch:
 
 jobs:
   run:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: pip install requests beautifulsoup4
+
       - name: Run script
         run: python check_sites.py
