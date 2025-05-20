@@ -1,26 +1,3 @@
-完美！你已经提供了：
-	•	✅ Bark Key：2qRcV2zJa2NXGAH7MFmtSd
-	•	✅ IFTTT Key：b15svmb9LKl10Yk-zC9AVx
-
-接下来我为你生成了完整的整合版 check_sites.py 脚本，实现如下功能：
-
-⸻
-
-✅ 功能一览
-
-功能	状态
-网站监测（Changi, OCBC, MAS, DBS, UOB）	✅
-自动去重，避免重复通知	✅
-Bark 推送（iOS 原生）	✅
-IFTTT 推送（格式完整）	✅
-每 30 分钟自动运行（GitHub Actions 已设置）	✅
-临时取消关键词过滤（测试更灵敏）	✅
-
-
-⸻
-
-📄 最终完整脚本：check_sites.py
-
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -126,29 +103,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-⸻
-
-✅ 上传步骤提示
-	1.	打开 GitHub 仓库 website-watcher-bark
-	2.	找到并编辑 check_sites.py
-	3.	将内容替换为上述全部内容
-	4.	history.json 保持为空 {}（首次推送不会跳过）
-	5.	然后点击 Actions → Run workflow 手动运行测试一次
-
-⸻
-
-🧪 测试后你应当收到两个通知：
-
-来源	内容
-Bark	原生通知，显示网站名 + 报告标题
-IFTTT	模板格式通知（标题、链接、时间）
-
-
-⸻
-
-如果你希望继续添加联合早报、Telegram 推送、翻译支持、HTML 网页输出等，只需说一句：
-
-“继续 + 功能名”
-我可以继续升级系统为你定制。现在测试吧！是否收到双通知？
